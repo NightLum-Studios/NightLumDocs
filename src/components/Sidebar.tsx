@@ -2,16 +2,16 @@ import { NavLink } from 'react-router-dom'
 import type { Project } from '../config/projects'
 import { ProjectSwitcher } from './ProjectSwitcher'
 
-export function DocumentationSidebar({ project }: { project: Project }) {
+export function DocumentationSidebar({ project, open = false, onNavigate }: { project: Project; open?: boolean; onNavigate?: () => void }) {
   return (
-    <aside className="sidebar" style={{ '--accent': project.accent } as React.CSSProperties}>
+    <aside className={`sidebar${open ? ' sidebar--open' : ''}`} style={{ '--accent': project.accent } as React.CSSProperties}>
       <ProjectSwitcher project={project} />
       <nav className="doc-nav" aria-label={`${project.name} documentation`}>
         {project.sections.map(section => (
           <section key={section.title}>
             <h2>{section.title}</h2>
             {section.pages.map(page => (
-              <NavLink key={page.slug} to={`${project.basePath}/${page.slug}`}>{page.title}</NavLink>
+              <NavLink key={page.slug} to={`${project.basePath}/${page.slug}`} onClick={onNavigate}>{page.title}</NavLink>
             ))}
           </section>
         ))}
