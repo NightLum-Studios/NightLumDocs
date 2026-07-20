@@ -31,6 +31,79 @@ icon.IconName = "refresh";
 
 The same element can switch between a Material Symbol and an inline SVG as long as both names are available in its registry.
 
+### UXML IconElement
+
+`IconElement` has a Unity 2022.3-compatible UXML factory and supports the `icon-name` attribute:
+
+```xml
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         xmlns:sigil="NightLum.Sigil.UIToolkit">
+    <ui:VisualElement class="toolbar">
+        <sigil:IconElement name="home-icon"
+                           icon-name="home"
+                           class="toolbar-icon" />
+    </ui:VisualElement>
+</ui:UXML>
+```
+
+UXML only declares the element and icon name. It does not create registries, register sources, download icons, or import inline SVG. Keep those operations in C#.
+
+### Registry context for a UI tree
+
+UXML-created elements normally obtain their registry from the containing UI tree:
+
+```csharp
+var registry = new IconRegistry();
+registry.Register(projectSvgIcons);
+registry.Register(MaterialSymbolsIconSource.LoadDefault());
+
+document.rootVisualElement.SetIconRegistry(registry);
+```
+
+`SetIconRegistry` affects the selected root and its descendants, not the complete application. An `IconElement` walks its ancestors and uses the nearest context. This allows independent documents and nested subtrees:
+
+```csharp
+documentA.rootVisualElement.SetIconRegistry(documentAIcons);
+documentB.rootVisualElement.SetIconRegistry(documentBIcons);
+
+// A nested subtree may override only its descendants.
+dialogRoot.SetIconRegistry(dialogIcons);
+```
+
+The existing `IconElement.Registry` property has higher priority than the tree context. Set it to `null` to let the element use its nearest context again.
+
+Context helpers:
+
+```csharp
+root.SetIconRegistry(registry);
+
+if (child.TryGetIconRegistry(out var inheritedRegistry))
+{
+    // inheritedRegistry is the nearest context registry.
+}
+
+root.ClearIconRegistry();
+```
+
+Existing descendants refresh immediately when a context is assigned, replaced, or cleared. Elements added to a live UI tree resolve on `AttachToPanelEvent`. An element moved between live panels resolves against its new ancestor context.
+
+### Icon-name priority
+
+An icon name may come from three public inputs. The deterministic priority is:
+
+1. `IconName` assigned through C# or a C# constructor;
+2. UXML `icon-name`;
+3. USS `--sigil-name`.
+
+Higher-priority input does not delete lower-priority values. This makes temporary C# changes reversible:
+
+```csharp
+icon.IconName = "settings"; // Overrides UXML and USS.
+icon.IconName = null;       // Restores icon-name, or --sigil-name if UXML has none.
+```
+
+An explicit empty or whitespace C# value is treated as an invalid/missing name, not as a request to fall back. Use `null` to remove the C# override.
+
 ### Built-in USS names
 
 Every `IconElement` receives:

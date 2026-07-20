@@ -14,6 +14,7 @@ export const sigilSections = [
       { slug: '05-fallbacks-and-helpers', title: 'Fallbacks and Helpers', file: 'sigil/05-fallbacks-and-helpers.md' },
       { slug: '06-custom-icon-sources', title: 'Custom Icon Sources', file: 'sigil/06-custom-icon-sources.md' },
       { slug: '07-runtime-and-performance', title: 'Runtime and Performance', file: 'sigil/07-runtime-and-performance.md' },
+      { slug: '08-font-families', title: 'Font Families', file: 'sigil/08-font-families.md' },
       { slug: '08-troubleshooting', title: 'Troubleshooting', file: 'sigil/08-troubleshooting.md' },
       { slug: '09-api-reference', title: 'Public API Reference', file: 'sigil/09-api-reference.md' },
     ],

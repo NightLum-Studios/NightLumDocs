@@ -12,6 +12,7 @@ using NightLum.Sigil;
 using NightLum.Sigil.MaterialSymbols;
 using NightLum.Sigil.Svg;
 using NightLum.Sigil.UIToolkit;
+using NightLum.Sigil.Fonts;
 using UnityEngine.UIElements;
 ```
 
@@ -21,6 +22,8 @@ The corresponding assemblies are:
 - `NightLum.Sigil.MaterialSymbols` - bundled Material Symbols source;
 - `NightLum.Sigil.Svg` - inline SVG source and parser;
 - `NightLum.Sigil.UIToolkit` - `IconElement` and UI Toolkit display helpers.
+- `NightLum.Sigil.Fonts` - font registry, family assets, variants, requests, and results.
+- `NightLum.Sigil.Fonts.Editor` - Google Fonts import tooling; Editor-only.
 
 The runtime assemblies do not depend on `UnityEditor` or `AssetDatabase`.
 

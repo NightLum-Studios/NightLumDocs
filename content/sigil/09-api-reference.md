@@ -27,8 +27,25 @@
 - `IconElement`
 - `IconElement.Registry`
 - `IconElement.IconName`
+- `IconElement.UxmlFactory`
+- `IconElement.UxmlTraits`
+- `IconRegistryContext.SetIconRegistry`
+- `IconRegistryContext.TryGetIconRegistry`
+- `IconRegistryContext.ClearIconRegistry`
 - `IconElementHelpers`
 - `VisualElementIconExtensions`
+
+### Fonts
+
+- `IFontSource`
+- `FontRegistry`
+- `FontFamily`
+- `FontVariant`
+- `FontRequest`
+- `FontResult`
+- `FontWeight`
+- `FontStyle`
+- `TextElementFontExtensions`
 
 ## Scope
 

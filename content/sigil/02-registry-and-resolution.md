@@ -13,7 +13,7 @@ int sourceCount = registry.SourceCount;
 bool removed = registry.Unregister(source);
 ```
 
-`Register` throws `ArgumentNullException` for `null`. Registering the same source instance more than once returns `false` and does not add it again.
+`Register` throws `ArgumentNullException` for `null`. A source already contained by the registry according to `List.Contains`/`Equals` returns `false` and is not added again. For sources that do not override `Equals`, this means the same instance.
 
 ### Resolve without creating UI
 
@@ -48,6 +48,6 @@ In this example, a project SVG named `home` overrides the Material Symbol named 
 
 Duplicate behavior is deterministic:
 
-- registering the same `IIconSource` instance twice returns `false`;
+- registering an `IIconSource` considered equal to an existing source returns `false`;
 - identical names in different sources resolve from the first registered source;
 - registering the same name twice in one `SvgIconSource` returns `false` and keeps the first SVG.
